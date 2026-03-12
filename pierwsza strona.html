@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title> Moja pierwsza strona</title>
+
+</head>
+<body>
+    <h1 style="color: red; font-size: 100px;">
+        Liściu cho na tripa
+    </h1>
+    <p> błagam...</p>
+<h2 style="font-size: 50px;color: rgb(155, 4, 4);">
+    dlaczego chcesz na tripa?:</h2>
+<ul style="list-style-position: inside; text-align: center; font-size: 35px;">
+    <li>dawno nie widziałeś gamonia</li>
+    <img src="https://cdn1.naekranie.pl/media/cache/amp/2018/01/Gamo%C5%84-plakat.jpg" width="300" height="400"/>
+    <li>rozmowy na tematy przeróżne</li>
+    <img src="https://www.theodysseyonline.com/media-library/image.jpg?id=18234848&width=980" width="400"/>
+    <P style="font-size: 20px;">
+        Kiedy ostatnio mogłeś porozmawiać z kimś o tym co ci leży na sercu?</p>
+    <li>doborowa muzyka</li>
+    <p>(kliknij, nie bądź cipa)</p>
+    <a href="https://www.youtube.com/watch?v=mmJXxDIh7AU">
+        <img src="https://e7.pngegg.com/pngimages/601/980/png-clipart-youtube-play-button-computer-icons-play-button-game-angle.png" width="300"/>
+    </a>
+    <li>odpoczniemy od przytłaczającej nasz rzeczywistości</li>
+    <img src="https://media.istockphoto.com/id/1351322589/photo/the-night-of-stars-and-milky-way.jpg?s=612x612&w=0&k=20&c=qiEU29UCu_deFj-hm0j2qjEl1YGXqONoEwTgsZ2HPc8="/>
+</ul>
+
+<button id="trip-button" class="trip-button" onclick="
+    document.getElementById('yeppie').classList.toggle('pokaz');
+    document.getElementById('confetti').classList.toggle('pokaz');
+
+    // pokaż wszystkie elementy misja-button
+    document.querySelectorAll('.misja-button').forEach(el => el.style.visibility = 'visible');
+">
+    Jeśli chcesz tripa to kliknij >:3
+</button>
+
+<img id="yeppie"
+    src="https://media1.tenor.com/m/RiZpodi6JD0AAAAC/fast-cat-cat-excited.gif">
+
+<img id="confetti"
+ src="https://cdn.pixabay.com/animation/2025/03/27/00/38/00-38-53-341_512.gif">
+
+<br><br>
+
+
+
+
+
+<h3 class="misja-button" style="color: rgb(153, 14, 14); font-size: 100px;">
+    No to trzeba zrobić LISTĘ GAMOŃSKICH MISJI</h3>
+
+<input class="misja-button" id="taskInput" placeholder="Wpisz MISJĘ">
+<button class="misja-button" onclick="addTask()">dodaj</button>
+
+<ul class="misja-button" id="tasklist"></ul>
+
+<!-- <button onclick="pokazalert()">test</button> -->
+
+
+
+
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
