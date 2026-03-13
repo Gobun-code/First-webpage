@@ -1,0 +1,119 @@
+body{
+    background-color: rgb(53, 53, 53);
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    }
+    
+#yeppie {
+    opacity: 0;
+    width: 800px;
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10;
+    pointer-events: none;
+    }
+
+#yeppie.pokaz {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    }
+
+
+#confetti {
+    opacity: 0;
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10;
+    pointer-events: none;
+    }
+
+
+#confetti.pokaz {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    }
+
+
+
+
+.trip-button {
+    font-size: 50px;
+    font-weight: bold;
+    color: red;
+    background: rgb(78, 77, 77);
+    background-size: 300% 300%;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0,6);
+    border-radius: 25px;
+
+}
+
+.trip-button:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0,9);
+}
+
+
+.misja-button {
+    font-size: 35px;
+    font-weight: bold;
+    color: red;
+    background: rgb(78, 77, 77);
+    background-size: 300% 300%;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0,6);
+    border-radius: 25px;
+    visibility: hidden;
+
+}
+
+.misja-button:hover {
+    transform: scale(1.008);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0,9);
+}
+
+
+
+/* ustaw jeszcze inny wygląd na to co jest "zribviibe" */
+
+.zrobione {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(167, 77, 77);
+    background: rgb(78, 77, 77);
+    background-size: 300% 300%;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0,6);
+    border-radius: 25px;
+    text-decoration: line-through;
+
+}
+
+
+li {
+    margin-bottom: 10px;
+}
+
+
+
+.licznik {
+    font-size: 35px;
+    font-weight: bold;
+    color: red;
+    background: rgb(78, 77, 77);
+    background-size: 300% 300%;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0,6);
+    border-radius: 25px;
+    visibility: hidden;
+
+}
