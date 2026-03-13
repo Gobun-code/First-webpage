@@ -34,7 +34,7 @@
     document.getElementById('confetti').classList.toggle('pokaz');
 
     // pokaż wszystkie elementy misja-button
-    document.querySelectorAll('.misja-button').forEach(el => el.style.visibility = 'visible');
+    document.querySelectorAll('.misja-button, .licznik').forEach(el => el.style.visibility = 'visible');
 ">
     Jeśli chcesz tripa to kliknij >:3
 </button>
@@ -57,9 +57,15 @@
 <input class="misja-button" id="taskInput" placeholder="Wpisz MISJĘ">
 <button class="misja-button" onclick="addTask()">dodaj</button>
 
+
+
+<h4 class="licznik" id="licznik"> liczba misji: </h4>
+
+
+
+
 <ul class="misja-button" id="tasklist"></ul>
 
-<!-- <button onclick="pokazalert()">test</button> -->
 
 
 
