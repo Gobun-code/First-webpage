@@ -1,7 +1,21 @@
+
+
+
+
+
+
+
+
+
 function pokazalert() {
     alert("działa");
 }
 
+
+
+function aktualizacjaLicznika() {
+    document.getElementById('licznik').textContent = "liczba misji: " + document.getElementById('tasklist').children.length
+}
 
 
 function addTask() {
@@ -10,6 +24,8 @@ function addTask() {
     const TaskText = input.value;
 
     const li = document.createElement("li");
+
+
 
     if (TaskText !== "") {
         li.textContent = TaskText;
@@ -22,6 +38,7 @@ function addTask() {
     li.onclick = function() {
         if (li.classList.contains('zrobione')) {
             li.remove()
+            aktualizacjaLicznika()
         }
         else {
         li.classList.toggle('zrobione')
@@ -29,9 +46,16 @@ function addTask() {
     }
 
 
+
+
     document.getElementById("tasklist").appendChild(li)
 
+    aktualizacjaLicznika()
+
     input.value = "";    
+
+
+    
 }
 
 
@@ -46,25 +70,10 @@ document.getElementById("taskInput").addEventListener("keydown", function(event)
 
 
 
-function przekreślnik () {
-    document.getElementById("tasklist"),addEventListener("click")
-    
-}
 
 
 
 
-
-//plan jest taki:
-// wziąć element z listy
-//patrzeć czy nikt go nie klika
-// jeżeli klika to zmienić jego czcionkę na przekreśloną
-
-//zrobić przycisk
-//który sprawia że zamiast tego co wyżej nappisałeś
-//zamiast przekreślenia
-//usuwa się element i chuj
-//elo
 
 
 
