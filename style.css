@@ -100,13 +100,28 @@ body{
 }
 
 
-li {
-    margin-bottom: 10px;
-}
 
 
 
 .licznik {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+    background: rgb(78, 77, 77);
+    background-size: 300% 300%;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0,6);
+    border-radius: 25px;
+    visibility: hidden;
+
+}
+
+
+
+
+
+
+
+.misje-list {
     font-size: 35px;
     font-weight: bold;
     color: red;
@@ -116,4 +131,10 @@ li {
     border-radius: 25px;
     visibility: hidden;
 
+}
+
+
+.misje-list li:hover {
+    background: rgb(129, 115, 115);
+    border-radius: 25px;
 }

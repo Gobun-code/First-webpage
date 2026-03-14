@@ -14,7 +14,15 @@ function pokazalert() {
 
 
 function aktualizacjaLicznika() {
-    document.getElementById('licznik').textContent = "liczba misji: " + document.getElementById('tasklist').children.length
+    const maxMisji = 10;
+    const licznik = document.getElementById('licznik');
+    const liczbaMisji = document.getElementById('tasklist').children.length;
+    const procent = liczbaMisji / maxMisji;
+    licznik.textContent = "liczba misji: " + liczbaMisji;
+    const g = 255 * procent;
+    const r = 255 * (1 - procent);
+licznik.style.color = `rgb(${r}, ${g}, 0)`;
+licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
 }
 
 
