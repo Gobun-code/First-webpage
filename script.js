@@ -26,6 +26,63 @@ function zapiszListe() {
     console.log('Lista zadań została zapisana:', tasks);
 }
 
+
+function zaznacziusun(li) {
+    li.onclick = function() {
+        if (li.classList.contains('zrobione')) {
+            li.remove()
+            zapiszListe()
+            aktualizacjaLicznika()
+        }
+        else {
+            li.classList.toggle('zrobione')
+            zapiszListe()
+            aktualizacjaLicznika()
+            }
+    }
+}
+
+
+function clearTasks() {
+    document.getElementById('clearTasks').
+    onclick = function() {
+    document.getElementById('tasklist').
+    querySelectorAll('li').forEach(li => {
+        li.remove()
+    })
+    zapiszListe()
+    aktualizacjaLicznika()}
+}
+
+
+
+
+
+
+function wczytajDane() {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+        const tasks = JSON.parse(savedTasks);
+
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.textContent = task.tekst;
+            if (task.zrobione) {
+                li.classList.add('zrobione');
+            }
+
+            zaznacziusun(li)
+
+
+        document.getElementById('tasklist').appendChild(li);
+        });
+    }
+}
+
+
+
+
+
 function addTask() {
     const input =
     document.getElementById("taskInput");
@@ -34,27 +91,12 @@ function addTask() {
     const li = document.createElement("li");
 
 
-
     if (TaskText !== "") {
         li.textContent = TaskText;
     }
     else {return}
 
-
-
-
-    li.onclick = function() {
-        if (li.classList.contains('zrobione')) {
-            li.remove()
-            aktualizacjaLicznika()
-        }
-        else {
-        li.classList.toggle('zrobione')
-        zapiszListe()
-        }
-    }
-
-
+    zaznacziusun(li)
 
 
     document.getElementById("tasklist").appendChild(li)
@@ -66,6 +108,9 @@ function addTask() {
     input.value = "";    
 }
 
+wczytajDane();
+aktualizacjaLicznika();
+clearTasks();
 
 
 document.getElementById("taskInput").addEventListener("keydown", function(event) {
@@ -73,8 +118,6 @@ document.getElementById("taskInput").addEventListener("keydown", function(event)
         addTask()
     }
 })
-
-
 
 
 
