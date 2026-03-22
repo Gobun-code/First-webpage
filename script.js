@@ -1,6 +1,7 @@
 function aktualizacjaLicznika() {
+    function licznikzwykły() {
     const maxMisji = 10;
-    const licznik = document.getElementById('licznik');
+    const licznik = document.getElementById('licznikZwykły');
     const liczbaMisji = document.getElementById('tasklist').children.length;
     const procent = liczbaMisji / maxMisji;
     licznik.textContent = "task count: " + liczbaMisji;
@@ -9,11 +10,24 @@ function aktualizacjaLicznika() {
 licznik.style.color = `rgb(${r}, ${g}, 0)`;
 licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
 }
-
+    function licznikzrobione() {
+        const maxMisji = 10;
+        const licznik = document.getElementById('licznikZrobione');
+        const liczbaMisji = document.getElementById('doneTasks').children.length;
+        const procent = liczbaMisji / maxMisji;
+        licznik.textContent = "task count: " + liczbaMisji;
+        const g = 255 * procent;
+        const r = 255 * (1 - procent);
+    licznik.style.color = `rgb(${r}, ${g}, 0)`;
+    licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
+    }
+    licznikzwykły()
+    licznikzrobione()
+}
 
 
 function zapiszListe() {
-    const tasklist = document.querySelectorAll('#tasklist li');
+    const tasklist = document.querySelectorAll('#tasklist li, #doneTasks li');
     const tasks = [];
     
     tasklist.forEach(li => {
@@ -36,6 +50,7 @@ function zaznacziusun(li) {
         }
         else {
             li.classList.toggle('zrobione')
+            document.getElementById('doneTasks').appendChild(li)
             zapiszListe()
             aktualizacjaLicznika()
             }
@@ -48,6 +63,24 @@ function clearTasks() {
     onclick = function() {
     document.getElementById('tasklist').
     querySelectorAll('li').forEach(li => {
+        li.remove()})
+       
+    document.getElementById('doneTasks').
+    querySelectorAll('li').forEach(li => {
+        li.remove()
+    })
+    zapiszListe()
+    aktualizacjaLicznika()}
+}
+
+
+
+
+function clearDone() {
+    document.getElementById('clearDone').
+    onclick = function() {
+    document.getElementById('doneTasks').
+    querySelectorAll('li.zrobione').forEach(li => {
         li.remove()
     })
     zapiszListe()
@@ -74,7 +107,10 @@ function wczytajDane() {
             zaznacziusun(li)
 
 
-        document.getElementById('tasklist').appendChild(li);
+        const listaDocelowa = task.zrobione 
+        ? document.getElementById('doneTasks')
+        : document.getElementById('tasklist');
+        listaDocelowa.appendChild(li);
         });
     }
 }
@@ -111,6 +147,7 @@ function addTask() {
 wczytajDane();
 aktualizacjaLicznika();
 clearTasks();
+clearDone();
 
 
 document.getElementById("taskInput").addEventListener("keydown", function(event) {
