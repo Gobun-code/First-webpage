@@ -41,10 +41,11 @@ function zapiszListe() {
 }
 
 
-function zaznacziusun(li) {
+function TaskStatusChange(li) {
     li.onclick = function() {
         if (li.classList.contains('zrobione')) {
-            li.remove()
+            li.classList.remove('zrobione')
+            document.getElementById('tasklist').appendChild(li)
             zapiszListe()
             aktualizacjaLicznika()
         }
@@ -104,7 +105,7 @@ function wczytajDane() {
                 li.classList.add('zrobione');
             }
 
-            zaznacziusun(li)
+            TaskStatusChange(li)
 
 
         const listaDocelowa = task.zrobione 
@@ -124,18 +125,32 @@ function addTask() {
     document.getElementById("taskInput");
     const TaskText = input.value;
 
+    const span = document.createElement('span');
+    span.textContent = TaskText
+
     const li = document.createElement("li");
+    const delButton = document.createElement('button');
+    delButton.textContent = 'usuń'
+    delButton.classList.add('delete-button');
+    delButton.onclick = function() {
+        console.log('jakikolwiek')
+        li.remove()
+        zapiszListe()
+        aktualizacjaLicznika()
+    }
+
 
 
     if (TaskText !== "") {
-        li.textContent = TaskText;
     }
     else {return}
 
-    zaznacziusun(li)
+    TaskStatusChange(li)
 
 
-    document.getElementById("tasklist").appendChild(li)
+    li.appendChild(span)
+    li.appendChild(delButton)
+    document.getElementById('tasklist').appendChild(li)
 
     zapiszListe()
 
