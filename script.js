@@ -25,36 +25,50 @@ licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
     licznikzrobione()
 }
 
+const tasks = [];
 
 function zapiszListe() {
-    const tasklist = document.querySelectorAll('#tasklist li, #doneTasks li');
-    const tasks = [];
+    // const tasklist = document.querySelectorAll('#tasklist li, #doneTasks li');
     
-    tasklist.forEach(li => {
-        tasks.push({
-            tekst: li.textContent,
-            zrobione: li.classList.contains('zrobione')
-        });
-    });
+    // // tasklist.forEach(li => {
+    //     tasks.push({
+    //         tekst: li.textContent,
+    //         zrobione: li.classList.contains('zrobione'),
+    //         id: li.dataset.id,
+    //         date: new Date(),
+    //     });
+    // });
+    
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    console.log('Lista zadań została zapisana:', tasks);
+    // console.log('Lista zadań została zapisana:', tasks);
 }
 
 
 function TaskStatusChange(li) {
-    li.onclick = function() {
-        if (li.classList.contains('zrobione')) {
-            li.classList.remove('zrobione')
-            document.getElementById('tasklist').appendChild(li)
-            zapiszListe()
-            aktualizacjaLicznika()
-        }
-        else {
-            li.classList.toggle('zrobione')
-            document.getElementById('doneTasks').appendChild(li)
-            zapiszListe()
-            aktualizacjaLicznika()
+    li.onclick = function(event) {
+        // console.log(event.target.tagName)
+        if(event.target.tagName == 'LI'){
+            console.log(tasks)
+            if (li.classList.contains('zrobione')) {
+                li.classList.remove('zrobione')
+                tasks.map(task => task.id === li.dataset.id? task.zrobione = false: null)
+
+                // zapiszListe()
+                // aktualizacjaLicznika()
+
+                // console.log(tasks, event.target.dataset.id)
             }
+            else {
+                li.classList.add('zrobione')
+                tasks.map(task => task.id === li.dataset.id? task.zrobione = true: null)
+                document.getElementById('doneTasks').appendChild(li)
+            }
+            // tasks.filter(task => task.id !== li.dataset.id )
+            zapiszListe()
+            wczytajDane()
+            aktualizacjaLicznika()
+
+        }
     }
 }
 
@@ -96,7 +110,8 @@ function clearDone() {
 function wczytajDane() {
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks) {
-        const tasks = JSON.parse(savedTasks);
+        tasks[JSON.parse(savedTasks)];
+        console.log('działa', tasks)
 
         tasks.forEach(task => {
             const li = document.createElement('li');
@@ -105,7 +120,6 @@ function wczytajDane() {
                 li.classList.add('zrobione');
             }
 
-            TaskStatusChange(li)
 
 
         const listaDocelowa = task.zrobione 
@@ -129,16 +143,24 @@ function addTask() {
     span.textContent = TaskText
 
     const li = document.createElement("li");
+    li.setAttribute('data-id', Date.now())
     const delButton = document.createElement('button');
-    delButton.textContent = 'usuń'
+    delButton.textContent = 'X'
     delButton.classList.add('delete-button');
     delButton.onclick = function() {
-        console.log('jakikolwiek')
+        // console.log('jakikolwiek')
         li.remove()
         zapiszListe()
         aktualizacjaLicznika()
     }
 
+    tasks.push({
+    tekst: li.textContent,
+    zrobione: li.classList.contains('zrobione'),
+    id: li.dataset.id,
+    date: new Date(),
+});
+// console.log(tasks)
 
 
     if (TaskText !== "") {
