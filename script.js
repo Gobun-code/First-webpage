@@ -1,190 +1,8 @@
-function aktualizacjaLicznika() {
-    function licznikzwykły() {
-    const maxMisji = 10;
-    const licznik = document.getElementById('licznikZwykły');
-    const liczbaMisji = document.getElementById('tasklist').children.length;
-    const procent = liczbaMisji / maxMisji;
-    licznik.textContent = "task count: " + liczbaMisji;
-    const g = 255 * procent;
-    const r = 255 * (1 - procent);
-licznik.style.color = `rgb(${r}, ${g}, 0)`;
-licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
-}
-    function licznikzrobione() {
-        const maxMisji = 10;
-        const licznik = document.getElementById('licznikZrobione');
-        const liczbaMisji = document.getElementById('doneTasks').children.length;
-        const procent = liczbaMisji / maxMisji;
-        licznik.textContent = "task count: " + liczbaMisji;
-        const g = 255 * procent;
-        const r = 255 * (1 - procent);
-    licznik.style.color = `rgb(${r}, ${g}, 0)`;
-    licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
-    }
-    licznikzwykły()
-    licznikzrobione()
-}
-
 const tasks = [];
 
-function zapiszListe() {
-    // const tasklist = document.querySelectorAll('#tasklist li, #doneTasks li');
-    
-    // // tasklist.forEach(li => {
-    //     tasks.push({
-    //         tekst: li.textContent,
-    //         zrobione: li.classList.contains('zrobione'),
-    //         id: li.dataset.id,
-    //         date: new Date(),
-    //     });
-    // });
-    
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    // console.log('Lista zadań została zapisana:', tasks);
-}
+document.getElementById('toDoList').addEventListener('click',(event) => TaskStatusChange(event.target) )
+document.getElementById('doneList').addEventListener('click',(event) => TaskStatusChange(event.target) )
 
-
-function TaskStatusChange(li) {
-    li.onclick = function(event) {
-        // console.log(event.target.tagName)
-        if(event.target.tagName == 'LI'){
-            console.log(tasks)
-            if (li.classList.contains('zrobione')) {
-                li.classList.remove('zrobione')
-                tasks.map(task => task.id === li.dataset.id? task.zrobione = false: null)
-
-                // zapiszListe()
-                // aktualizacjaLicznika()
-
-                // console.log(tasks, event.target.dataset.id)
-            }
-            else {
-                li.classList.add('zrobione')
-                tasks.map(task => task.id === li.dataset.id? task.zrobione = true: null)
-                document.getElementById('doneTasks').appendChild(li)
-            }
-            // tasks.filter(task => task.id !== li.dataset.id )
-            zapiszListe()
-            wczytajDane()
-            aktualizacjaLicznika()
-
-        }
-    }
-}
-
-
-function clearTasks() {
-    document.getElementById('clearTasks').
-    onclick = function() {
-    document.getElementById('tasklist').
-    querySelectorAll('li').forEach(li => {
-        li.remove()})
-       
-    document.getElementById('doneTasks').
-    querySelectorAll('li').forEach(li => {
-        li.remove()
-    })
-    zapiszListe()
-    aktualizacjaLicznika()}
-}
-
-
-
-
-function clearDone() {
-    document.getElementById('clearDone').
-    onclick = function() {
-    document.getElementById('doneTasks').
-    querySelectorAll('li.zrobione').forEach(li => {
-        li.remove()
-    })
-    zapiszListe()
-    aktualizacjaLicznika()}
-}
-
-
-
-
-
-
-function wczytajDane() {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-        tasks[JSON.parse(savedTasks)];
-        console.log('działa', tasks)
-
-        tasks.forEach(task => {
-            const li = document.createElement('li');
-            li.textContent = task.tekst;
-            if (task.zrobione) {
-                li.classList.add('zrobione');
-            }
-
-
-
-        const listaDocelowa = task.zrobione 
-        ? document.getElementById('doneTasks')
-        : document.getElementById('tasklist');
-        listaDocelowa.appendChild(li);
-        });
-    }
-}
-
-
-
-
-
-function addTask() {
-    const input =
-    document.getElementById("taskInput");
-    const TaskText = input.value;
-
-    const span = document.createElement('span');
-    span.textContent = TaskText
-
-    const li = document.createElement("li");
-    li.setAttribute('data-id', Date.now())
-    const delButton = document.createElement('button');
-    delButton.textContent = 'X'
-    delButton.classList.add('delete-button');
-    delButton.onclick = function() {
-        // console.log('jakikolwiek')
-        li.remove()
-        zapiszListe()
-        aktualizacjaLicznika()
-    }
-
-    tasks.push({
-    tekst: li.textContent,
-    zrobione: li.classList.contains('zrobione'),
-    id: li.dataset.id,
-    date: new Date(),
-});
-// console.log(tasks)
-
-
-    if (TaskText !== "") {
-    }
-    else {return}
-
-    TaskStatusChange(li)
-
-
-    li.appendChild(span)
-    li.appendChild(delButton)
-    document.getElementById('tasklist').appendChild(li)
-
-    zapiszListe()
-
-    aktualizacjaLicznika()
-
-    input.value = "";    
-}
-
-wczytajDane();
-aktualizacjaLicznika();
-clearTasks();
-clearDone();
 
 
 document.getElementById("taskInput").addEventListener("keydown", function(event) {
@@ -192,6 +10,178 @@ document.getElementById("taskInput").addEventListener("keydown", function(event)
         addTask()
     }
 })
+
+
+function addTask() {
+    const input =
+    document.getElementById("taskInput");
+    const taskText = input.value;
+    
+    if(taskText == ''){
+        return
+    }
+    
+    tasks.push({
+        tekst: taskText,
+        zrobione: false,
+        id: Date.now(),
+        date: new Date(),
+    });
+
+    renderTasks();
+    zapiszListe();
+
+    aktualizacjaLicznika()
+
+    input.value = "";    
+}
+
+function renderTasks(){
+    const toDoList = document.getElementById('toDoList')
+    const doneList = document.getElementById('doneList')
+    toDoList.innerHTML = ''
+    doneList.innerHTML = ''
+
+    tasks.map(task =>{
+        if(task.zrobione){
+            doneList.innerHTML += `
+            <li data-id=${task.id} class="zrobione"> <span> ${task.tekst} </span> <button class="delete-button"> X </button></li>`
+            document.querySelector('.delete-button').addEventListener('click',(e) => deleteButton(e))
+
+        }
+        else{
+            toDoList.innerHTML += `
+            <li data-id=${task.id}> <span> ${task.tekst} </span> <button class="delete-button"> X </button></li>`
+            document.querySelector('.delete-button').addEventListener('click',(e) => deleteButton(e))
+
+        }
+    })
+}
+
+function zapiszListe() {
+    localStorage.clear()
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function wczytajDane() {
+    const savedTasks = localStorage.getItem('tasks');
+    tasks.push(...JSON.parse(savedTasks))
+    console.log(tasks)
+    renderTasks()
+}
+
+function aktualizacjaLicznika() {
+    function licznikzwykły() {
+        const maxMisji = 10;
+        const licznik = document.getElementById('licznikZwykły');
+        const liczbaMisji = document.getElementById('toDoList').children.length;
+        const procent = liczbaMisji / maxMisji;
+        licznik.textContent = "task count: " + liczbaMisji;
+        const g = 255 * procent;
+        const r = 255 * (1 - procent);
+        licznik.style.color = `rgb(${r}, ${g}, 0)`;
+        licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
+    }
+    function licznikzrobione() {
+        const maxMisji = 10;
+        const licznik = document.getElementById('licznikZrobione');
+        const liczbaMisji = document.getElementById('doneList').children.length;
+        const procent = liczbaMisji / maxMisji;
+        licznik.textContent = "task count: " + liczbaMisji;
+        const g = 255 * procent;
+        const r = 255 * (1 - procent);
+        licznik.style.color = `rgb(${r}, ${g}, 0)`;
+        licznik.style.fontSize = `${35 + (liczbaMisji * 1.25)}px`;
+    }
+    licznikzwykły()
+    licznikzrobione()
+}
+
+function TaskStatusChange(li) {
+    console.log(li)
+    if(li.tagname!='BUTTON'){
+
+        tasks.map(task => task.id == li.closest('li').dataset.id
+        ? task.zrobione = !task.zrobione
+        :null)
+
+        renderTasks();
+        zapiszListe();
+        aktualizacjaLicznika();
+    }
+    else{console.log('czy klikam guziora')}
+}
+
+function clearTasks() {
+    tasks.splice(0, tasks.length)
+    renderTasks()
+    zapiszListe()
+    aktualizacjaLicznika()
+}
+
+function clearDone() {
+    const toDoT = tasks.filter(task => task.zrobione === false)
+    tasks.splice(0, tasks.length)
+    tasks.push(...toDoT)
+
+    renderTasks()
+    zapiszListe()
+    aktualizacjaLicznika()
+}
+
+function deleteButton(e){
+    console.log('usuwando')
+    const unDeleted = tasks.filter(task => task.id != e.target.closest('li').dataset.id )
+    tasks.splice(0, tasks.length)
+    tasks.push(...unDeleted)
+
+    renderTasks()
+    zapiszListe()
+    aktualizacjaLicznika()
+
+
+
+}
+
+wczytajDane();
+aktualizacjaLicznika();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
