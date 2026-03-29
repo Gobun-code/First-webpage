@@ -28,8 +28,8 @@ function addTask() {
         date: new Date(),
     });
 
-    renderTasks();
     zapiszListe();
+    wczytajDane();
 
     aktualizacjaLicznika()
 
@@ -45,15 +45,13 @@ function renderTasks(){
     tasks.map(task =>{
         if(task.zrobione){
             doneList.innerHTML += `
-            <li data-id=${task.id} class="zrobione"> <span> ${task.tekst} </span> <button class="delete-button"> X </button></li>`
-            document.querySelector('.delete-button').addEventListener('click',(e) => deleteButton(e))
-
+            <li data-id=${task.id} class="zrobione"> <span> ${task.tekst} </span> <span> ${String(task.date).substring(0, 10)} ${String(task.date).substring(11, 19)} </span> <button class="delete-button"> X </button></li>`
+            document.querySelectorAll('.delete-button').forEach((button) => {button.addEventListener('click',(e) => deleteButton(e))})
         }
         else{
             toDoList.innerHTML += `
-            <li data-id=${task.id}> <span> ${task.tekst} </span> <button class="delete-button"> X </button></li>`
-            document.querySelector('.delete-button').addEventListener('click',(e) => deleteButton(e))
-
+            <li data-id=${task.id}> <span> ${task.tekst} </span> <span> ${String(task.date).substring(0, 10)} ${String(task.date).substring(11, 19)} </span> <button class="delete-button"> X </button></li>`
+            document.querySelectorAll('.delete-button').forEach((button) => {button.addEventListener('click',(e) => deleteButton(e))})
         }
     })
 }
@@ -65,6 +63,7 @@ function zapiszListe() {
 
 function wczytajDane() {
     const savedTasks = localStorage.getItem('tasks');
+    tasks.length = 0
     tasks.push(...JSON.parse(savedTasks))
     console.log(tasks)
     renderTasks()
@@ -130,7 +129,7 @@ function clearDone() {
 }
 
 function deleteButton(e){
-    console.log('usuwando')
+    console.log('usuwanie')
     const unDeleted = tasks.filter(task => task.id != e.target.closest('li').dataset.id )
     tasks.splice(0, tasks.length)
     tasks.push(...unDeleted)
@@ -152,42 +151,4 @@ aktualizacjaLicznika();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// dodać sortowanie po dacie
